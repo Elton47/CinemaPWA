@@ -1,7 +1,7 @@
 {
   "movies": [
     {
-      "id": 1,
+      "_id": 1,
       "name": "Halloween",
       "director": "David Gordon Green",
       "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -13,13 +13,13 @@
       "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
       "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
       "category": {
-        "id": 1,
+        "_id": 1,
         "name": "Thriller"
       },
       "validity": true
     },
     {
-      "id": 2,
+      "_id": 2,
       "name": "Venom",
       "director": "Ruben Fleischer",
       "description": "Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.",
@@ -31,7 +31,7 @@
       "thumbnailUrl": "http://www.gstatic.com/tv/thumb/v22vodart/13937884/p13937884_v_v8_aa.jpg",
       "trailerUrl": "https://www.youtube.com/watch?v=u9Mv98Gr5pY",
       "category": {
-        "id": 1,
+        "_id": 1,
         "name": "Thriller"
       },
       "validity": true
@@ -39,16 +39,16 @@
   ],
   "schedules": [
     {
-      "id": 1,
+      "_id": 1,
       "theater": {
-        "id": 1,
+        "_id": 1,
         "number": 1,
         "floor": 1,
         "capacity": 80,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -60,7 +60,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -71,16 +71,16 @@
       "validity": true
     },
     {
-      "id": 2,
+      "_id": 2,
       "theater": {
-        "id": 2,
+        "_id": 2,
         "number": 2,
         "floor": 1,
         "capacity": 60,
         "validity": true
       },
       "movie": {
-        "id": 2,
+        "_id": 2,
         "name": "Venom",
         "director": "Ruben Fleischer",
         "description": "Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.",
@@ -92,26 +92,26 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/v22vodart/13937884/p13937884_v_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=u9Mv98Gr5pY",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
       },
-      "date": "2019-03-27",
+      "date": "2019-06-06",
       "time": "20:00",
-      "price": 10,
+      "price": 15,
       "validity": true
     },
     {
       "theater": {
-        "id": 2,
+        "_id": 2,
         "number": 2,
         "floor": 1,
         "capacity": 60,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -123,7 +123,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -132,18 +132,18 @@
       "time": "12:13",
       "price": 12,
       "validity": false,
-      "id": 3
+      "_id": 3
     },
     {
       "theater": {
-        "id": 2,
+        "_id": 2,
         "number": 2,
         "floor": 1,
         "capacity": 60,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -155,7 +155,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -164,18 +164,18 @@
       "time": "12:13",
       "price": 12,
       "validity": false,
-      "id": 4
+      "_id": 4
     },
     {
       "theater": {
-        "id": 2,
+        "_id": 2,
         "number": 2,
         "floor": 1,
         "capacity": 60,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -187,7 +187,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -196,18 +196,18 @@
       "time": "12:19",
       "price": 1,
       "validity": false,
-      "id": 5
+      "_id": 5
     },
     {
       "theater": {
-        "id": 2,
+        "_id": 2,
         "number": 2,
         "floor": 1,
         "capacity": 60,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -219,7 +219,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -228,18 +228,18 @@
       "time": "12:34",
       "price": 12,
       "validity": false,
-      "id": 6
+      "_id": 6
     },
     {
       "theater": {
-        "id": 1,
+        "_id": 1,
         "number": 1,
         "floor": 1,
         "capacity": 80,
         "validity": true
       },
       "movie": {
-        "id": 1,
+        "_id": 1,
         "name": "Halloween",
         "director": "David Gordon Green",
         "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
@@ -251,7 +251,7 @@
         "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
         "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
         "category": {
-          "id": 1,
+          "_id": 1,
           "name": "Thriller"
         },
         "validity": true
@@ -260,75 +260,143 @@
       "time": "12:35",
       "price": 1,
       "validity": false,
-      "id": 7
+      "_id": 7
+    },
+    {
+      "theater": {
+        "_id": 2,
+        "number": 2,
+        "floor": 1,
+        "capacity": 60,
+        "validity": true
+      },
+      "movie": {
+        "_id": 1,
+        "name": "Halloween",
+        "director": "David Gordon Green",
+        "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
+        "duration": "1h 44m",
+        "year": 2018,
+        "rating": "7.4/10",
+        "ratingUrl": "https://www.imdb.com/title/tt1502407/",
+        "avatarUrl": "https://cdn2us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2018/09/halloween_review_2018_jamie_lee_curtis.jpg?itok=qUTTrJ_R",
+        "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
+        "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
+        "category": {
+          "_id": 1,
+          "name": "Thriller"
+        },
+        "validity": true
+      },
+      "date": "2019-06-06",
+      "time": "11:02",
+      "price": 10,
+      "_id": 8
+    },
+    {
+      "theater": {
+        "_id": 1,
+        "number": 1,
+        "floor": 1,
+        "capacity": 80,
+        "validity": true
+      },
+      "movie": {
+        "_id": 1,
+        "name": "Halloween",
+        "director": "David Gordon Green",
+        "description": "It's been 40 years since Laurie Strode survived a vicious attack from crazed killer Michael Myers on Halloween night. Locked up in an institution, Myers manages to escape when his bus transfer goes horribly wrong. Laurie now faces a terrifying showdown when the masked madman returns to Haddonfield, Ill. -- but this time, she's ready for him.",
+        "duration": "1h 44m",
+        "year": 2018,
+        "rating": "7.4/10",
+        "ratingUrl": "https://www.imdb.com/title/tt1502407/",
+        "avatarUrl": "https://cdn2us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2018/09/halloween_review_2018_jamie_lee_curtis.jpg?itok=qUTTrJ_R",
+        "thumbnailUrl": "http://www.gstatic.com/tv/thumb/movieposters/13864607/p13864607_p_v8_aa.jpg",
+        "trailerUrl": "https://www.youtube.com/watch?v=ek1ePFp-nBI",
+        "category": {
+          "_id": 1,
+          "name": "Thriller"
+        },
+        "validity": true
+      },
+      "date": "2019-06-06",
+      "time": "11:10",
+      "price": 23,
+      "_id": 9
     }
   ],
   "categories": [
     {
-      "id": 1,
+      "_id": 1,
       "name": "Action",
       "validity": true
     },
     {
-      "id": 2,
+      "_id": 2,
       "name": "Thriller",
       "validity": true
     },
     {
-      "id": 3,
+      "_id": 3,
       "name": "Drama",
       "validity": true
     },
     {
       "name": "Horror",
-      "id": 4,
+      "_id": 4,
       "validity": true
     },
     {
-      "id": 5,
+      "_id": 5,
       "name": "Comedy",
       "validity": false
     },
     {
       "name": "asdasda",
       "validity": false,
-      "id": 6
+      "_id": 6
     },
     {
       "name": "Comedy",
       "validity": false,
-      "id": 7
+      "_id": 7
     },
     {
       "name": "Comedy",
       "validity": true,
-      "id": 8
+      "_id": 8
     },
     {
       "name": "test",
       "validity": false,
-      "id": 9
+      "_id": 9
     },
     {
       "name": "asd",
       "validity": false,
-      "id": 10
+      "_id": 10
     }
   ],
   "theaters": [
     {
-      "id": 1,
+      "_id": 1,
       "number": 1,
       "floor": 1,
       "capacity": 80,
       "validity": true
     },
     {
-      "id": 2,
+      "_id": 2,
       "number": 2,
       "floor": 1,
       "capacity": 60,
       "validity": true
+    },
+    {
+      "number": 3,
+      "floor": 2,
+      "capacity": 40,
+      "_id": 3
     }
   ]
 }

@@ -8,9 +8,9 @@ import { MatSort, MatTableDataSource, MatPaginator, MatInput } from '@angular/ma
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GenericTableComponent<T> implements OnChanges {
-  @ViewChild(MatInput) filterInput: MatInput;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatInput, { static: false }) filterInput: MatInput;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   dataSource: MatTableDataSource<T>;
   @Input()
   data: T[];

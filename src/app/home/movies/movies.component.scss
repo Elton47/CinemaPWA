@@ -14,7 +14,7 @@
   max-height: 20rem;
   overflow: hidden;
 }
-/deep/ .mat-card .mat-card-header-text {
+::ng-deep .mat-card .mat-card-header-text {
   width: 100%;
   margin: 0;
 }
