@@ -1,14 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AppEntityServices } from '../../app-entity-services';
 import { CategoryComponent } from './category/category.component';
 import { Category } from './models/category.model';
-import { Observable, Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as fromCategory from './reducers/category.reducer';
-import { LoadCategories, CategoryActions, CategoryActionTypes, RestoreCategory } from './actions/category.actions';
-import { SubscriptionService } from '../../shared/subscription.service';
-import { take } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 
 @Component({
   selector: 'app-categories',
@@ -16,47 +12,29 @@ import { Actions } from '@ngrx/effects';
   styleUrls: ['./categories.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CategoriesComponent implements OnInit, OnDestroy {
-  private actionsSubscription: Subscription;
-  private dialogRef: MatDialogRef<CategoryComponent>;
+export class CategoriesComponent implements OnInit {
   categories$: Observable<Category[]>;
   displayedColumns: string[] = ['name'];
 
   constructor(
-    private store: Store<fromCategory.CategoryState>,
-    private actions: Actions,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private subscriptionService: SubscriptionService
-  ) {}
+    private appEntityServices: AppEntityServices,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadCategories());
-    this.categories$ = this.store.select(fromCategory.selectAll);
-    this.actionsSubscription = this.actions.subscribe((action: CategoryActions) => {
-      switch (action.type) {
-        case CategoryActionTypes.AddCategorySuccess:
-        case CategoryActionTypes.UpdateCategorySuccess: this.dialogRef.close(); return;
-        case CategoryActionTypes.DeleteCategorySuccess: this.dialogRef.close(); this.showUndoSnackbar(action.payload.category); return;
+    this.categories$ = this.appEntityServices.categoryService.entities$;
+    this.appEntityServices.categoryService.loaded$.pipe(take(1)).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.appEntityServices.categoryService.getAll();
       }
     });
   }
 
-  ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
-    this.subscriptionService.unsubscribeComponent$.next();
-  }
-
-  private showUndoSnackbar(category: Category): void {
-    const snackBarRef = this.snackBar.open(`Category "${category.name}" deleted successfully!`, 'Undo', { duration: 4000 });
-    snackBarRef.onAction().pipe(take(1)).subscribe(() => this.store.dispatch(new RestoreCategory({ category })));
-  }
-
   public add(): void {
-    this.dialogRef = this.dialog.open(CategoryComponent);
+    this.dialog.open(CategoryComponent);
   }
 
   public onRowClick(category: Category): void {
-    this.dialogRef = this.dialog.open(CategoryComponent, { data: category });
+    this.dialog.open(CategoryComponent, { data: category });
   }
 }

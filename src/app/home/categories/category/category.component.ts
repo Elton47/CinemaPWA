@@ -1,13 +1,10 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatDialogRef, MatSnackBar, MatSnackBarRef, MAT_DIALOG_DATA, SimpleSnackBar } from '@angular/material';
+import { EntityAction, EntityOp } from '@ngrx/data';
+import { Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
+import { AppEntityServices } from '../../../app-entity-services';
 import { Category, CategoryRequest } from '../models/category.model';
-import { Store } from '@ngrx/store';
-import * as fromCategory from '../reducers/category.reducer';
-import { UpdateCategory, AddCategory, DeleteCategory, CategoryActions, CategoryActionTypes } from '../actions/category.actions';
-import { SubscriptionService } from '../../../shared/subscription.service';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 
 @Component({
   selector: 'app-category',
@@ -16,17 +13,16 @@ import { Actions } from '@ngrx/effects';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-  private actionsSubscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private snackBarRef: MatSnackBarRef<SimpleSnackBar>;
   editMode = false;
   request: CategoryRequest = new CategoryRequest();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: Category,
-    private store: Store<fromCategory.CategoryState>,
-    private actions: Actions,
-    private matSnackBar: MatSnackBar,
-    private subscriptionService: SubscriptionService
+    private appEntityServices: AppEntityServices,
+    private dialogRef: MatDialogRef<CategoryComponent>,
+    private matSnackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -34,29 +30,34 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.request.formGroup.patchValue(this.data);
       this.editMode = true;
     }
-    this.actionsSubscription = this.actions.subscribe((action: CategoryActions) => {
-      switch (action.type) {
-        case CategoryActionTypes.AddCategory:
-        case CategoryActionTypes.UpdateCategory:
-        case CategoryActionTypes.DeleteCategory: this.request.formGroup.markAsPending(); return;
-        case CategoryActionTypes.AddCategoryFailure:
-          this.snackBarRef = this.matSnackBar.open(`Couldn't create the Category "${this.request.formGroup.get('name').value}"! ${action.payload.error.status !== undefined ? `Error ${action.payload.error.status}` : ''}`, 'Retry', { duration: 4000 });
-          this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.store.dispatch(new AddCategory({ category: this.request.formGroup.value })));
-          this.request.formGroup.updateValueAndValidity();
-          return;
-        case CategoryActionTypes.UpdateCategoryFailure:
-          this.snackBarRef = this.matSnackBar.open(`Couldn't update the Category "${this.data.name}" to "${this.request.formGroup.get('name').value}"! ${action.payload.error.status !== undefined ? `Error ${action.payload.error.status}` : ''}`, 'Retry', { duration: 4000 });
-          this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.store.dispatch(new UpdateCategory({ category: { id: this.data._id, changes: this.request.formGroup.value } })));
-          this.request.formGroup.updateValueAndValidity();
-          return;
-        case CategoryActionTypes.DeleteCategoryFailure:
-          this.snackBarRef = this.matSnackBar.open(`Couldn't create the Category "${this.data.name}"! ${action.payload.error.status !== undefined ? `Error ${action.payload.error.status}` : ''}`, 'Retry', { duration: 4000 });
-          this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.store.dispatch(new DeleteCategory({ category: this.data })));
-          this.request.formGroup.updateValueAndValidity();
-          return;
-        default: this.request.formGroup.updateValueAndValidity(); return;
-      }
-    });
+    this.appEntityServices.categoryService.entityActions$.pipe(
+      tap((action: EntityAction<any>) => {
+        switch (action.payload.entityOp) {
+          case EntityOp.SAVE_ADD_ONE:
+          case EntityOp.SAVE_UPDATE_ONE:
+          case EntityOp.SAVE_DELETE_ONE: this.request.formGroup.markAsPending(); return;
+          case EntityOp.SAVE_ADD_ONE_SUCCESS: this.close(`Category "${(action.payload.data as Partial<Category>).name}" created successfully!`); return;
+          case EntityOp.SAVE_UPDATE_ONE_SUCCESS: this.close(`Category updated successfully to "${(action.payload.data.changes as Partial<Category>).name}"!`); return;
+          case EntityOp.SAVE_DELETE_ONE_SUCCESS: this.close(`Category "${this.data.name}" deleted successfully!`); return;
+          case EntityOp.SAVE_ADD_ONE_ERROR:
+            this.snackBarRef = this.matSnackBar.open(`Couldn't create the Category "${(action.payload.data as Partial<Category>).name}"! ${action.payload.data.error.error.status !== undefined ? `Error ${action.payload.data.error.error.status}` : ''}`, 'Retry', { duration: 4000 });
+            this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.save());
+            this.close();
+            return;
+          case EntityOp.SAVE_UPDATE_ONE_ERROR:
+            this.snackBarRef = this.matSnackBar.open(`Couldn't update the Category "${this.data.name}" to "${(action.payload.data.changes as Partial<Category>).name}"! ${action.payload.data.error.error.status !== undefined ? `Error ${action.payload.data.error.error.status}` : ''}`, 'Retry', { duration: 4000 });
+            this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.save());
+            this.close();
+            return;
+          case EntityOp.SAVE_DELETE_ONE_ERROR:
+            this.snackBarRef = this.matSnackBar.open(`Couldn't delete the Category "${this.data.name}"! ${action.payload.data.error.error.status !== undefined ? `Error ${action.payload.data.error.error.status}` : ''}`, 'Retry', { duration: 4000 });
+            this.snackBarRef.onAction().pipe(take(1)).subscribe(() => this.delete());
+            return;
+          default: this.close(); return;
+        }
+      }),
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
@@ -66,19 +67,29 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if (this.request.formGroup.pending) {
       this.matSnackBar.open('Cancelled', null, { duration: 4000 });
     }
-    this.actionsSubscription.unsubscribe();
-    this.subscriptionService.unsubscribeComponent$.next();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  private close(message?: string): void {
+    if (message) {
+      this.matSnackBar.open(message, null, { duration: 4000 });
+    }
+    if (this.request.formGroup.pending) {
+      this.request.formGroup.updateValueAndValidity();
+    }
+    this.dialogRef.close();
   }
 
   public save(): void {
     if (this.editMode) {
-      this.store.dispatch(new UpdateCategory({ category: { id: this.data._id, changes: this.request.formGroup.value } }));
+      this.appEntityServices.categoryService.update({ id: this.data.id, ...this.request.formGroup.value });
     } else {
-      this.store.dispatch(new AddCategory({ category: this.request.formGroup.value }));
+      this.appEntityServices.categoryService.add(this.request.formGroup.value);
     }
   }
 
   public delete(): void {
-    this.store.dispatch(new DeleteCategory({ category: this.data }));
+    this.appEntityServices.categoryService.delete(this.data.id);
   }
 }

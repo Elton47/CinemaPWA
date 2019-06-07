@@ -1,7 +1,7 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export class Theater {
-  _id: string;
+  id: string;
   number: number;
   floor: number;
   capacity: number;

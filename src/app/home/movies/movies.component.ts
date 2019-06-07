@@ -1,15 +1,13 @@
-
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { MatDialog, MatSnackBar, MatDialogRef } from '@angular/material';
-import { Movie } from './models/movie.model';
-import { ScheduleComponent } from '../schedules/schedule/schedule.component';
+import { EntityAction, EntityOp } from '@ngrx/data';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
+import { AppEntityServices } from '../../app-entity-services';
 import { Schedule } from '../schedules/models/schedule.model';
-import { Observable, Subscription } from 'rxjs';
-import { Store, ActionsSubject } from '@ngrx/store';
-import * as fromMovie from './reducers/movie.reducer';
-import { LoadMovies } from './actions/movie.actions';
-import { ScheduleActionTypes, ScheduleActions } from '../schedules/actions/schedule.actions';
+import { ScheduleComponent } from '../schedules/schedule/schedule.component';
+import { Movie } from './models/movie.model';
 
 @Component({
   selector: 'app-movies',
@@ -18,30 +16,37 @@ import { ScheduleActionTypes, ScheduleActions } from '../schedules/actions/sched
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesComponent implements OnInit, OnDestroy {
-  private actionsSubjectSubscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private dialogRef: MatDialogRef<ScheduleComponent>;
   movies$: Observable<Movie[]>;
 
   constructor(
-    private store: Store<fromMovie.MovieState>,
-    private actionsSubject: ActionsSubject,
+    private appEntityServices: AppEntityServices,
     private router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadMovies());
-    this.movies$ = this.store.select(fromMovie.selectAll);
-    this.actionsSubjectSubscription = this.actionsSubject.subscribe((action: ScheduleActions) => {
-      switch (action.type) {
-        case ScheduleActionTypes.AddScheduleSuccess: this.onAddedSchedule(action.payload.schedule); return;
+    this.movies$ = this.appEntityServices.movieService.entities$;
+    this.appEntityServices.movieService.loaded$.pipe(take(1)).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.appEntityServices.movieService.getAll();
       }
     });
+    this.appEntityServices.scheduleService.entityActions$.pipe( // ScheduleService, we are creating schedules of the selected Movie.
+      tap((action: EntityAction<any>) => {
+        switch(action.payload.entityOp) {
+          case EntityOp.SAVE_ADD_ONE_SUCCESS: this.onAddedSchedule(action.payload.data); return;
+        }
+      }),
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
-    this.actionsSubjectSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public getAvatarUrl = (url: string) => `url(${url})`;
