@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
-import { ScheduleComponent } from './schedule/schedule.component';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AppEntityServices } from '../../app-entity-services';
 import { Schedule } from './models/schedule.model';
-import { LoadSchedules, ScheduleActions, ScheduleActionTypes, RestoreSchedule } from './actions/schedule.actions';
-import { Store, ActionsSubject } from '@ngrx/store';
-import * as fromSchedule from './reducers/schedule.reducer';
-import { Subscription, Observable } from 'rxjs';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 @Component({
   selector: 'app-schedules',
@@ -13,45 +12,29 @@ import { Subscription, Observable } from 'rxjs';
   styleUrls: ['./schedules.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SchedulesComponent implements OnInit, OnDestroy {
-  private actionsSubjectSubscription: Subscription;
-  private dialogRef: MatDialogRef<ScheduleComponent>;
+export class SchedulesComponent implements OnInit {
   schedules$: Observable<Schedule[]>;
   displayedColumns: string[] = ['movie.name', 'theater.number', 'date', 'time', 'price'];
 
   constructor(
-    private store: Store<fromSchedule.ScheduleState>,
-    private actionsSubject: ActionsSubject,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private appEntityServices: AppEntityServices,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadSchedules());
-    this.schedules$ = this.store.select(fromSchedule.selectAll);
-    this.actionsSubjectSubscription = this.actionsSubject.subscribe((action: ScheduleActions) => {
-      switch (action.type) {
-        case ScheduleActionTypes.AddScheduleSuccess:
-        case ScheduleActionTypes.UpdateScheduleSuccess: this.dialogRef.close(); return;
-        case ScheduleActionTypes.DeleteScheduleSuccess: this.dialogRef.close(); this.showUndoSnackbar(action.payload.schedule); return;
+    this.schedules$ = this.appEntityServices.scheduleService.entities$;
+    this.appEntityServices.scheduleService.loaded$.pipe(take(1)).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.appEntityServices.scheduleService.getAll();
       }
     });
   }
 
-  ngOnDestroy(): void {
-    this.actionsSubjectSubscription.unsubscribe();
-  }
-
-  private showUndoSnackbar(schedule: Schedule): void {
-    const snackBarRef = this.snackBar.open(`Schedule for movie "${schedule.movie.name}" deleted successfully!`, 'Undo', { duration: 4000 });
-    snackBarRef.onAction().subscribe(() => this.store.dispatch(new RestoreSchedule({ schedule })));
-  }
-
   public add(): void {
-    this.dialogRef = this.dialog.open(ScheduleComponent);
+    this.dialog.open(ScheduleComponent);
   }
 
   public onRowClick(selectedSchedule: Schedule): void {
-    this.dialogRef = this.dialog.open(ScheduleComponent, { data: selectedSchedule });
+    this.dialog.open(ScheduleComponent, { data: selectedSchedule });
   }
 }

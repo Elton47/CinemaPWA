@@ -1,5 +1,5 @@
-import { Component, Input, ViewChild, OnChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { MatSort, MatTableDataSource, MatPaginator, MatInput } from '@angular/material';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { MatInput, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-generic-table',
