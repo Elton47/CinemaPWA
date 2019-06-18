@@ -4,7 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  batch: false
+  branches:
+    include:
+    - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -20,4 +23,3 @@ steps:
     npm install
     ng build --prod --base-href https://elton47.github.io/CinemaPWA/
   displayName: 'npm install and build'
-  autoCancel: true
