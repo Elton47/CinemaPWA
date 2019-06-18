@@ -20,3 +20,4 @@ steps:
     npm install
     ng build --prod --base-href https://elton47.github.io/CinemaPWA/
   displayName: 'npm install and build'
+  autoCancel: true
