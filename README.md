@@ -1,5 +1,5 @@
-[![Build Status](https://dev.azure.com/eltonimemishi/CinemaPWA/_apis/build/status/Elton47.CinemaPWA?branchName=master)](https://dev.azure.com/eltonimemishi/CinemaPWA/_build/latest?definitionId=1&branchName=master)
-[![Build Status](https://travis-ci.org/Elton47/CinemaPWA.svg?branch=master)](https://travis-ci.org/Elton47/CinemaPWA)
+[![Build Status](https://dev.azure.com/Elton47/CinemaPWA/_apis/build/status/CinemaPWA-Integration?branchName=master)](https://dev.azure.com/Elton47/CinemaPWA/_build/latest?definitionId=1&branchName=master)
+[![Board Status](https://dev.azure.com/Elton47/f495a653-cbea-48ec-b8ea-a59fea2d018a/83723af8-3919-4f4c-b8eb-4a17a884b743/_apis/work/boardbadge/aee10110-f699-4beb-a11b-33e71355a506?columnOptions=1)](https://dev.azure.com/Elton47/f495a653-cbea-48ec-b8ea-a59fea2d018a/_boards/board/t/83723af8-3919-4f4c-b8eb-4a17a884b743/Microsoft.RequirementCategory)
 [![Known Vulnerabilities](https://snyk.io/test/github/Elton47/CinemaPWA/badge.svg)](https://snyk.io/test/github/Elton47/CinemaPWA)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-default.svg)](https://conventionalcommits.org)
 
