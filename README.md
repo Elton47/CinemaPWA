@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/eltonimemishi/CinemaPWA/_apis/build/status/Elton47.CinemaPWA?branchName=master)](https://dev.azure.com/eltonimemishi/CinemaPWA/_build/latest?definitionId=1&branchName=master)
 [![Build Status](https://travis-ci.org/Elton47/CinemaPWA.svg?branch=master)](https://travis-ci.org/Elton47/CinemaPWA)
 [![Known Vulnerabilities](https://snyk.io/test/github/Elton47/CinemaPWA/badge.svg)](https://snyk.io/test/github/Elton47/CinemaPWA)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-default.svg)](https://conventionalcommits.org)
